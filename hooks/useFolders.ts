@@ -1,11 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
-
+import { useAlert } from "@/components/AlertProvider";
 export function useFolders() {
   const [folders, setFolders] = useState<string[]>([]);
   const [selectedFolder, setSelectedFolder] = useState("");
   const [newFolderName, setNewFolderName] = useState("");
+  const handleNewFolderNameChange = (value: string) => {
+  const sanitized = value
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/[^a-z0-9_-]/g, "");
 
+  setNewFolderName(sanitized);
+};
+  const alert = useAlert();
   const fetchFolders = async () => {
     try {
       const res = await fetch("/api/get-folders");
@@ -17,64 +25,73 @@ export function useFolders() {
   };
 
   const createFolder = async () => {
-    const name = newFolderName.trim();
-    if (!name) return;
+  const name = newFolderName.trim();
+  if (!name) return;
 
-    // ✅ FRONTEND CHECK
-    if (folders.includes(name)) {
-      alert(`Folder "${name}" already exists`);
-      return;
-    }
+  // ✅ FRONTEND CHECK
+  if (folders.includes(name)) {
+    alert.error("Error", `Folder "${name}" already exists`);
+    return;
+  }
 
-    const res = await fetch("/api/create-folder", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ folderName: name }),
-    });
+  // ✅ CONFIRMATION
+  const confirmed = window.confirm(
+    `Are you sure you want to create folder "${name}"?`
+  );
 
-    const data = await res.json();
+  if (!confirmed) return; // user clicked Cancel
 
-    if (!res.ok) {
-      alert(data.error); // backend message
-      return;
-    }
+  const res = await fetch("/api/create-folder", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ folderName: name }),
+  });
 
-    setSelectedFolder(name);
-    setNewFolderName("");
-    fetchFolders();
-  };
+  const data = await res.json();
+
+  if (!res.ok) {
+    alert.error("Error", data.error);
+    return;
+  }
+
+  setSelectedFolder(name);
+  setNewFolderName("");
+  fetchFolders();
+};
+
 
   useEffect(() => {
     fetchFolders();
     const interval = setInterval(fetchFolders, 5000);
     return () => clearInterval(interval);
   }, []);
-const exportFolder = async (folderName: string) => {
-  if (!folderName) {
-    alert("No folder selected to export");
-    return;
-  }
+  const exportFolder = async (folderName: string) => {
+    if (!folderName) {
+      alert.warn("Warn", "No folder selected to export");
+      return;
+    }
 
-  try {
-    // Fetch the files from the backend
-    const res = await fetch(`/api/export-folder?name=${encodeURIComponent(folderName)}`);
-    if (!res.ok) throw new Error("Failed to fetch folder files");
+    try {
+      // Fetch the files from the backend
+      const res = await fetch(
+        `/api/export-folder?name=${encodeURIComponent(folderName)}`
+      );
+      if (!res.ok) throw new Error("Failed to fetch folder files");
 
-    // Expect backend to return a ZIP file containing .txt files
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
+      // Expect backend to return a ZIP file containing .txt files
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${folderName}.zip`; // Download as ZIP
-    a.click();
-    URL.revokeObjectURL(url);
-  } catch (err) {
-    console.error(err);
-    alert("Export failed");
-  }
-};
-
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${folderName}.zip`; // Download as ZIP
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error(err);
+      alert.error("Error", "Export failed");
+    }
+  };
 
   return {
     folders,
@@ -83,6 +100,7 @@ const exportFolder = async (folderName: string) => {
     newFolderName,
     setNewFolderName,
     createFolder,
-    exportFolder
+    exportFolder,
+    handleNewFolderNameChange
   };
 }

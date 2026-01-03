@@ -4,22 +4,30 @@ type Props = {
   onChange: (v: string) => void;
   required?: boolean;
   placeholder?: string;
+  txtfoooter?: string;
 };
 
-export function TextAreaField({ label, value, onChange, placeholder, required }: Props) {
+export function TextAreaField({
+  label,
+  value,
+  onChange,
+  placeholder,
+  required = true,
+  txtfoooter,
+}: Props) {
   return (
     <div className="flex flex-col gap-1.5 mb-4">
       {/* Label with optional required asterisk */}
-      <label className="text-sm font-semibold text-gray-700 flex items-center gap-1">
+      <label className="text-sm font-semibold text-blue-500 mt-3 flex items-center gap-1">
         {label}
-        {required && <span className="text-red-500 text-xs">*</span>}
+        {required && <span className="text-red-700 text-xs">*</span>}
       </label>
 
       <textarea
         value={value}
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
-        rows={4}
+        rows={5}
         required={required}
         className="
           w-full 
@@ -41,6 +49,9 @@ export function TextAreaField({ label, value, onChange, placeholder, required }:
           scrollbar-thin scrollbar-thumb-gray-200
         "
       />
+      <p className="text-xs text-red-500 italic -mt-6 bg-white ml-3 w-fit border p-1.5 border-gray-200 rounded-xl">
+        {txtfoooter ?? "Press ⏎ (Enter) to create a new line"}
+      </p>
     </div>
   );
 }

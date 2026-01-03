@@ -3,7 +3,7 @@ type Props = {
   selectedFolder: string;
   onSelect: (v: string) => void;
   newFolderName: string;
-  onNewNameChange: (v: string) => void;
+  onNewNameChange: (value: string) => void;
   onCreate: () => void;
 };
 
@@ -43,7 +43,7 @@ export function FolderSelector({
           <input
             value={newFolderName}
             onChange={(e) => onNewNameChange(e.target.value)}
-            placeholder="Enter folder name..."
+            placeholder="Enter folder name... (use _ for space)"
             className="flex-1 bg-white border border-blue-200 text-sm rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-blue-400"
             autoFocus
           />

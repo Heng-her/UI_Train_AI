@@ -11,9 +11,10 @@ export default function Home() {
     selectedFolder,
     setSelectedFolder,
     newFolderName,
-    setNewFolderName,
+    // setNewFolderName,
     createFolder,
     exportFolder,
+    handleNewFolderNameChange
   } = useFolders();
 
   // const alert = useAlert();
@@ -22,7 +23,7 @@ export default function Home() {
     /* 1. Added 'flex', 'items-center', and 'justify-center' to the parent */
     <main className="min-h-screen bg-gray-50 py-12 px-4 flex items-center justify-center">
       {/* 2. Added 'mx-auto' and 'w-full' to ensure it stays centered and responsive */}
-      <div className="max-w-3xl w-full mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <div className="max-w-5xl w-full mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
             <span className="text-blue-500">📁</span> Folder Manager
@@ -40,7 +41,7 @@ export default function Home() {
                 selectedFolder={selectedFolder}
                 onSelect={setSelectedFolder}
                 newFolderName={newFolderName}
-                onNewNameChange={setNewFolderName}
+                onNewNameChange={handleNewFolderNameChange}
                 onCreate={createFolder}
               />
             </div>
