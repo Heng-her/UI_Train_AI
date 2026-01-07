@@ -1,0 +1,30 @@
+Generate content for a travel knowledge form in plain text using the exact structure and section titles below. Include website and Google Maps links in the Visitor Information section, but do not include any image URLs or real Information in Siem Reap, Cambodia. Write clearly and professionally for tourists. Keep it concise but informative. Use real examples from Siem Reap, Cambodia. Do NOT add extra sections or commentary. Use bullet points for lists. Do NOT number items. Output format must follow exactly:
+
+[mountain type] with one of the following: Trekking Mountains, Scenic Viewpoints, Nature / Eco-Mountains, Adventure / Climbing Mountains, Cultural / Historical Mountains.
+
+**Main Description ***
+1–3 sentences introducing the [mountain type] in Siem Reap.
+
+**Key Highlights ***
+Bullet point
+Bullet point
+Bullet point
+Bullet point
+
+**Visitor Information ***
+Mountain name – location or short address, website link
+Google Maps: Google Maps link
+…(5 examples)
+
+**Tips for Visiting ***
+Practical tip for tourists
+Practical tip for tourists
+Practical tip for tourists
+Practical tip for tourists
+Practical tip for tourists
+
+**Why Visit ***
+Reason to visit
+Reason to visit
+Reason to visit
+Reason to visit

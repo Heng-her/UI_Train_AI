@@ -5,7 +5,7 @@ import { FolderSelector } from "@/components/FolderSelector";
 import { FileForm } from "@/components/FileForm";
 // import { useAlert } from "@/components/AlertProvider";
 
-export default function Home() {
+export default function Me() {
   const {
     folders,
     selectedFolder,
@@ -15,9 +15,52 @@ export default function Home() {
     createFolder,
     exportFolder,
     handleNewFolderNameChange,
-    exportAllFolders,
   } = useFolders();
+  function autofillForm() {
+    const rawInput = prompt(
+      "Paste your full form content here (Main Description, Key Highlights, etc.):"
+    );
+    if (!rawInput) return;
 
+    function setReactValue(el: HTMLTextAreaElement, value: string) {
+  const setter = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(el), "value")?.set;
+  setter?.call(el, value);
+  el.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
+
+    function extract(section: string) {
+      if (!rawInput) return "";
+      const regex = new RegExp(
+        `\\*\\*${section} \\*\\*\\*[\\s\\S]*?\\n([\\s\\S]*?)(?=\\n\\*\\*|$)`,
+        "i"
+      );
+      const match = rawInput.match(regex);
+      return match ? match[1].trim() : "";
+    }
+
+    const textareas =
+      document.querySelectorAll<HTMLTextAreaElement>("textarea");
+
+    if (textareas.length >= 6) {
+      const sections = [
+        "Main Description",
+        "Key Highlights",
+        "Visitor Information",
+        "Tips for Visiting",
+        "Why Visit",
+        "Image URLs",
+      ];
+
+      sections.forEach((section, i) => {
+        setReactValue(textareas[i], extract(section));
+      });
+
+      console.log("✅ Form auto-filled from prompt input");
+    } else {
+      console.warn("Not enough textareas found.");
+    }
+  }
   // const alert = useAlert();
 
   return (
@@ -49,16 +92,15 @@ export default function Home() {
             <button
               onClick={() => exportFolder(selectedFolder)}
               disabled={!selectedFolder || selectedFolder === "__new__"}
-              className="bg-green-600 h-10 place-self-end hover:bg-green-700 disabled:bg-green-300 text-white text-sm font-medium px-4 rounded-md transition-colors shadow-sm w-40"
+              className="bg-green-600 h-10 place-self-end hover:bg-green-700 disabled:bg-green-300 text-white text-sm font-medium px-4 rounded-md transition-colors shadow-sm w-32"
             >
               export (zip)
             </button>
             <button
-              onClick={exportAllFolders}
-              disabled={folders.length === 0}
-              className="bg-blue-600 h-10 place-self-end hover:bg-blue-700 disabled:bg-blue-300 text-white text-sm font-medium px-4 rounded-md transition-colors shadow-sm w-56"
+              onClick={() => autofillForm()}
+              className="bg-green-600 h-10 place-self-end hover:bg-green-700 disabled:bg-green-300 text-white text-sm font-medium px-4 rounded-md transition-colors shadow-sm w-32"
             >
-              export ALL (zip)
+              Auto-fill
             </button>
           </section>
 

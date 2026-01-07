@@ -1,18 +1,22 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useAlert } from "@/components/AlertProvider";
+
+export type Folder = {
+  name: string;
+  count: number;
+};
+
 export function useFolders() {
-  const [folders, setFolders] = useState<string[]>([]);
+  const [folders, setFolders] = useState<Folder[]>([]);
   const [selectedFolder, setSelectedFolder] = useState("");
   const [newFolderName, setNewFolderName] = useState("");
   const handleNewFolderNameChange = (value: string) => {
-  const sanitized = value
-    .toLowerCase()
-    .replace(/\s+/g, "")
-    .replace(/[^a-z0-9_-]/g, "");
+    const sanitized = value.toLowerCase().replace(/\s+/g, "_");
 
-  setNewFolderName(sanitized);
-};
+    setNewFolderName(sanitized);
+  };
+
   const alert = useAlert();
   const fetchFolders = async () => {
     try {
@@ -25,40 +29,39 @@ export function useFolders() {
   };
 
   const createFolder = async () => {
-  const name = newFolderName.trim();
-  if (!name) return;
+    const name = newFolderName.trim();
+    if (!name) return;
 
-  // ✅ FRONTEND CHECK
-  if (folders.includes(name)) {
-    alert.error("Error", `Folder "${name}" already exists`);
-    return;
-  }
+    // ✅ FRONTEND CHECK
+    if (folders.some((f) => f.name === name)) {
+      alert.error("Error", `Folder "${name}" already exists`);
+      return;
+    }
 
-  // ✅ CONFIRMATION
-  const confirmed = window.confirm(
-    `Are you sure you want to create folder "${name}"?`
-  );
+    // ✅ CONFIRMATION
+    const confirmed = window.confirm(
+      `Are you sure you want to create folder "${name}"?`
+    );
 
-  if (!confirmed) return; // user clicked Cancel
+    if (!confirmed) return; // user clicked Cancel
 
-  const res = await fetch("/api/create-folder", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ folderName: name }),
-  });
+    const res = await fetch("/api/create-folder", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ folderName: name }),
+    });
 
-  const data = await res.json();
+    const data = await res.json();
 
-  if (!res.ok) {
-    alert.error("Error", data.error);
-    return;
-  }
+    if (!res.ok) {
+      alert.error("Error", data.error);
+      return;
+    }
 
-  setSelectedFolder(name);
-  setNewFolderName("");
-  fetchFolders();
-};
-
+    setSelectedFolder(name);
+    setNewFolderName("");
+    fetchFolders();
+  };
 
   useEffect(() => {
     fetchFolders();
@@ -92,6 +95,25 @@ export function useFolders() {
       alert.error("Error", "Export failed");
     }
   };
+  const exportAllFolders = async () => {
+    try {
+      const res = await fetch("/api/export-all-folders");
+      if (!res.ok) throw new Error("Failed to export all folders");
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "knowledge.zip";
+      a.click();
+
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error(err);
+      alert.error("Error", "Export all folders failed");
+    }
+  };
 
   return {
     folders,
@@ -101,6 +123,7 @@ export function useFolders() {
     setNewFolderName,
     createFolder,
     exportFolder,
-    handleNewFolderNameChange
+    handleNewFolderNameChange,
+    exportAllFolders,
   };
 }

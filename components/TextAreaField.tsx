@@ -20,7 +20,7 @@ export function TextAreaField({
       {/* Label with optional required asterisk */}
       <label className="text-sm font-semibold text-blue-500 mt-3 flex items-center gap-1">
         {label}
-        {required && <span className="text-red-700 text-xs">*</span>}
+        {required && <span className="text-red-700 text-sm">*</span>}
       </label>
 
       <textarea
@@ -36,6 +36,8 @@ export function TextAreaField({
           bg-white 
           border border-gray-200 
           rounded-xl 
+          overflow-x-auto
+          whitespace-nowrap
           placeholder:text-gray-400
           transition-all duration-200
           outline-none

@@ -1,8 +1,24 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  assetPrefix: "mhz-disable-dry-rush.trycloudflare.com",
+  assetPrefix: "fisher-charms-checkout-sunset.trycloudflare.com",
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "media-cdn.tripadvisor.com",
+      },
+      {
+        protocol: "https",
+        hostname: "media.tacdn.com",
+      },
+      {
+        protocol: "https",
+        hostname: "res.klook.com",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

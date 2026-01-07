@@ -1,5 +1,7 @@
+import type { Folder } from "@/hooks/useFolders";
+
 type Props = {
-  folders: string[];
+  folders: Folder[];
   selectedFolder: string;
   onSelect: (v: string) => void;
   newFolderName: string;
@@ -27,8 +29,8 @@ export function FolderSelector({
         >
           <option value="">-- Select Folder --</option>
           {folders.map((f) => (
-            <option key={f} value={f}>
-              📂 {f}
+            <option key={f.name} value={f.name}>
+              📂 {f.name}&nbsp;{f.count}
             </option>
           ))}
           <option value="__new__" className="font-semibold text-blue-600">
