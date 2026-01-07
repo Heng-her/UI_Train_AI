@@ -3,9 +3,23 @@
 import { useFolders } from "@/hooks/useFolders";
 import { FolderSelector } from "@/components/FolderSelector";
 import { FileForm } from "@/components/FileForm";
+import { useEffect, useState } from "react";
 // import { useAlert } from "@/components/AlertProvider";
 
 export default function Me() {
+  const [viewerCount, setViewerCount] = useState(0);
+  const [viewersData, setViewersData] = useState<any[]>([]); // New state variable
+
+  useEffect(() => {
+    fetch("/api/viewer")
+      .then((res) => res.json())
+      .then((data) => {
+        setViewerCount(data.viewers.length);
+        setViewersData(data.viewers); // Update new state variable
+      })
+      .catch(console.error);
+  }, []);
+
   const {
     folders,
     selectedFolder,
@@ -23,11 +37,13 @@ export default function Me() {
     if (!rawInput) return;
 
     function setReactValue(el: HTMLTextAreaElement, value: string) {
-  const setter = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(el), "value")?.set;
-  setter?.call(el, value);
-  el.dispatchEvent(new Event("input", { bubbles: true }));
-}
-
+      const setter = Object.getOwnPropertyDescriptor(
+        Object.getPrototypeOf(el),
+        "value"
+      )?.set;
+      setter?.call(el, value);
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+    }
 
     function extract(section: string) {
       if (!rawInput) return "";
@@ -72,6 +88,50 @@ export default function Me() {
           <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
             <span className="text-blue-500">📁</span> Folder Manager
           </h1>
+          <div>
+            <p className="text-sm text-gray-500">Total Viewers: {viewerCount}</p>
+          </div>
+        </div>
+
+        {/* New section for displaying viewer details */}
+        <div className="mt-8 pt-6 border-t border-gray-100">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">Viewer Details</h2>
+          {viewersData.length > 0 ? (
+            <div className="space-y-4">
+              {viewersData.map((viewer, index) => (
+                <div key={index} className="bg-gray-50 p-4 rounded-md shadow-sm border border-gray-100">
+                  <p className="text-sm font-medium text-gray-700">Viewer ID: <span className="font-normal text-gray-600">{viewer.viewerId}</span></p>
+                  <p className="text-sm font-medium text-gray-700">Type: <span className="font-normal text-gray-600">{viewer.type}</span></p>
+                  <p className="text-sm font-medium text-gray-700">Last Active: <span className="font-normal text-gray-600">{new Date(viewer.session.lastActiveAt).toLocaleString()}</span></p>
+                  
+                  <div>
+                      <p className="text-sm font-medium text-gray-700 mt-2">Pages Visited:</p>
+                      <ul className="list-disc list-inside pl-4 mt-1 space-y-1">
+                          {viewer.pages ? (
+                              viewer.pages.map((page, pageIndex) => (
+                                  <li key={pageIndex} className="text-sm text-gray-600">
+                                      <span className="font-semibold">{page.route}</span> at {new Date(page.timestamp).toLocaleTimeString()}
+                                      <br />
+                                      <a href={page.url} className="text-blue-500 hover:underline break-all" target="_blank" rel="noopener noreferrer">{page.url}</a>
+                                  </li>
+                              ))
+                          ) : viewer.page ? (
+                               <li className="text-sm text-gray-600">
+                                  <span className="font-semibold">{viewer.page.route}</span>
+                                  <br />
+                                  <a href={viewer.page.url} className="text-blue-500 hover:underline break-all" target="_blank" rel="noopener noreferrer">{viewer.page.url}</a>
+                              </li>
+                          ) : null}
+                      </ul>
+                  </div>
+
+                  <p className="text-sm font-medium text-gray-700 mt-2">User Agent: <span className="font-normal text-gray-600 break-all">{viewer.device.userAgent}</span></p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500">No viewer data available.</p>
+          )}
         </div>
 
         <div className="space-y-6">
