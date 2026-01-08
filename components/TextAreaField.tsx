@@ -37,7 +37,6 @@ export function TextAreaField({
           border border-gray-200 
           rounded-xl 
           overflow-x-auto
-          whitespace-nowrap
           placeholder:text-gray-400
           transition-all duration-200
           outline-none

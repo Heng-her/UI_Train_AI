@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  assetPrefix: "fisher-charms-checkout-sunset.trycloudflare.com",
+  assetPrefix: "nascar-theory-ease-alternate.trycloudflare.com",
 
   images: {
     remotePatterns: [
