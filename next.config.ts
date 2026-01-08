@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  assetPrefix: "nascar-theory-ease-alternate.trycloudflare.com",
+  assetPrefix: "settlement-volume-soap-magic.trycloudflare.com",
 
   images: {
     remotePatterns: [
