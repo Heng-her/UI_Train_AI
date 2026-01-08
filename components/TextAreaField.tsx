@@ -30,7 +30,8 @@ export function TextAreaField({
         rows={5}
         required={required}
         className="
-          w-full 
+          w-full
+          pb-5
           px-4 py-3 
           text-sm text-gray-800 
           bg-white 
