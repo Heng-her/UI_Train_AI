@@ -3,6 +3,7 @@
 import { useFolders } from "@/hooks/useFolders";
 import { FolderSelector } from "@/components/FolderSelector";
 import { FileForm } from "@/components/FileForm";
+import { useEffect, useState } from "react";
 // import { useAlert } from "@/components/AlertProvider";
 
 export default function Home() {
@@ -17,7 +18,15 @@ export default function Home() {
     handleNewFolderNameChange,
     exportAllFolders,
   } = useFolders();
-
+  const [viewerCount, setViewerCount] = useState<number>(0);
+  useEffect(() => {
+    fetch("/api/viewer")
+      .then((res) => res.json())
+      .then((data) => {
+        setViewerCount(data.viewers.length);
+      })
+      .catch(console.error);
+  }, []);
   // const alert = useAlert();
 
   return (
@@ -28,6 +37,9 @@ export default function Home() {
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
             <span className="text-blue-500">📁</span> Folder Manager
+          </h1>
+          <h1 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+            {viewerCount}
           </h1>
         </div>
 
