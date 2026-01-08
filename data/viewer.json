@@ -6,8 +6,8 @@
       "type": "anonymous",
       "session": {
         "startedAt": "2026-01-07T05:40:26.555Z",
-        "lastActiveAt": "2026-01-07T05:51:53.640Z",
-        "durationSeconds": 687
+        "lastActiveAt": "2026-01-08T01:52:17.090Z",
+        "durationSeconds": 72710
       },
       "activity": {
         "lastEvent": "load",
@@ -36,6 +36,42 @@
           "route": "/sfd",
           "referrer": "",
           "timestamp": "2026-01-07T05:51:53.640Z"
+        },
+        {
+          "url": "http://localhost:3000/",
+          "route": "/",
+          "referrer": "",
+          "timestamp": "2026-01-08T01:39:13.381Z"
+        },
+        {
+          "url": "http://localhost:3000/me",
+          "route": "/me",
+          "referrer": "",
+          "timestamp": "2026-01-08T01:39:24.977Z"
+        },
+        {
+          "url": "http://localhost:3000/",
+          "route": "/",
+          "referrer": "",
+          "timestamp": "2026-01-08T01:50:22.821Z"
+        },
+        {
+          "url": "http://localhost:3000/me",
+          "route": "/me",
+          "referrer": "",
+          "timestamp": "2026-01-08T01:50:26.336Z"
+        },
+        {
+          "url": "http://localhost:3000/dara",
+          "route": "/dara",
+          "referrer": "",
+          "timestamp": "2026-01-08T01:52:05.897Z"
+        },
+        {
+          "url": "http://localhost:3000/me",
+          "route": "/me",
+          "referrer": "",
+          "timestamp": "2026-01-08T01:52:17.090Z"
         }
       ]
     },
@@ -45,8 +81,8 @@
       "type": "anonymous",
       "session": {
         "startedAt": "2026-01-07T05:41:27.093Z",
-        "lastActiveAt": "2026-01-07T05:51:54.830Z",
-        "durationSeconds": 627
+        "lastActiveAt": "2026-01-08T01:52:45.623Z",
+        "durationSeconds": 72678
       },
       "activity": {
         "lastEvent": "load",
@@ -69,6 +105,30 @@
           "route": "/me",
           "referrer": "http://localhost:3000/me",
           "timestamp": "2026-01-07T05:41:27.093Z"
+        },
+        {
+          "url": "http://localhost:3000/",
+          "route": "/",
+          "referrer": "",
+          "timestamp": "2026-01-08T01:51:05.599Z"
+        },
+        {
+          "url": "http://localhost:3000/me",
+          "route": "/me",
+          "referrer": "",
+          "timestamp": "2026-01-08T01:51:55.207Z"
+        },
+        {
+          "url": "http://localhost:3000/",
+          "route": "/",
+          "referrer": "",
+          "timestamp": "2026-01-08T01:52:38.205Z"
+        },
+        {
+          "url": "http://localhost:3000/me",
+          "route": "/me",
+          "referrer": "",
+          "timestamp": "2026-01-08T01:52:45.623Z"
         }
       ]
     }
