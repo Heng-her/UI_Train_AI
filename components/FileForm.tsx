@@ -303,24 +303,28 @@ ${formatWithDash(images)}
             onChange={setHighlights}
             placeholder={`Write the main introduction paragraph here...\n- e.g Key Highlights\n- e.g Key Highlights`}
             txtfoooter="Press ⏎ (Enter) to create a new line"
+            classlabel="whitespace-nowrap"
           />
           <TextAreaField
             label="📍 Visitor Information"
             value={visitor}
             onChange={setVisitor}
             placeholder={`Enter a key highlight...\n- e.g Enter a key highlight...\n- e.g Enter a key highlight...`}
+            classlabel="whitespace-nowrap"
           />
           <TextAreaField
             label="💡 Tips for Visiting "
             value={tips}
             onChange={setTips}
             placeholder={`Pro tips for travelers...\n- e.g Pro tips for travelers...\n- e.g Pro tips for travelers...`}
+            classlabel="whitespace-nowrap"
           />
           <TextAreaField
             label="❓ Why Visit"
             value={why}
             onChange={setWhy}
             placeholder={`Unique selling points...\n- e.g Unique selling points...\n- e.g Unique selling points...`}
+            classlabel="whitespace-nowrap"
           />
         </div>
 
@@ -329,6 +333,7 @@ ${formatWithDash(images)}
           value={images}
           onChange={setImages}
           placeholder={`Paste one URL per line...\n- e.g Paste one URL per line.jpg\n- e.g Paste one URL per line.jpg`}
+          classlabel="whitespace-nowrap"
           required={false}
         />
 

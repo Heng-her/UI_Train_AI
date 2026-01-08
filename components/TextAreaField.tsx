@@ -5,6 +5,7 @@ type Props = {
   required?: boolean;
   placeholder?: string;
   txtfoooter?: string;
+  classlabel?: string;
 };
 
 export function TextAreaField({
@@ -14,6 +15,7 @@ export function TextAreaField({
   placeholder,
   required = true,
   txtfoooter,
+  classlabel,
 }: Props) {
   return (
     <div className="flex flex-col gap-1.5 mb-4">
@@ -29,15 +31,15 @@ export function TextAreaField({
         onChange={(e) => onChange(e.target.value)}
         rows={5}
         required={required}
-        className="
+        className={`
           w-full
           pb-5
           px-4 py-3 
+          ${classlabel}
           text-sm text-gray-800 
           bg-white 
           border border-gray-200 
-          rounded-xl 
-          overflow-x-auto
+          rounded-xl
           placeholder:text-gray-400
           transition-all duration-200
           outline-none
@@ -49,7 +51,7 @@ export function TextAreaField({
           hover:border-gray-300
           /* Scrollbar styling */
           scrollbar-thin scrollbar-thumb-gray-200
-        "
+          `}
       />
       <p className="text-xs text-red-500 italic -mt-6 bg-white ml-3 w-fit border p-1.5 border-gray-200 rounded-xl">
         {txtfoooter ?? "Press ⏎ (Enter) to create a new line"}
