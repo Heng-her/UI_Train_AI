@@ -105,7 +105,7 @@ export default function Me() {
     }
   }
   // const alert = useAlert();
-const parseUA = (ua: string) => {
+  const parseUA = (ua: string) => {
     if (ua.includes("Windows")) return "Windows";
     if (ua.includes("Macintosh")) return "macOS";
     return "Mobile/Other";
@@ -142,7 +142,7 @@ const parseUA = (ua: string) => {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="gap-6">
           {/* LEFT COLUMN: VIEWER FEED */}
           <section className="lg:col-span-2 space-y-4">
             <div className="flex items-center justify-between">
@@ -241,7 +241,7 @@ const parseUA = (ua: string) => {
           </section>
 
           {/* RIGHT COLUMN: CONTROLS */}
-          <section className="space-y-6">
+          <section className="space-y-6 hidden">
             <div className="bg-white rounded-xl shadow-md border border-slate-200 p-6">
               <h2 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
                 <FolderOpen size={18} className="text-blue-500" />

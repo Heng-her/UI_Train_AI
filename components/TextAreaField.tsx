@@ -29,7 +29,7 @@ export function TextAreaField({
         value={value}
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
-        rows={5}
+        rows={10}
         required={required}
         className={`
           w-full
